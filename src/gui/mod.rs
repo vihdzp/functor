@@ -32,7 +32,7 @@ struct AppData {
     vol_presets: Vec<Preset>,
 
     dc: bool,
-    interpolation: Interpolation,
+    // interpolation: Interpolation,
 }
 
 /// An event relating to a preset.
@@ -56,6 +56,8 @@ pub enum PresetEvent {
     },
 }
 
+/*
+
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Interpolation {
     Drop,
@@ -69,6 +71,7 @@ pub enum AppEvent {
 
     Interpolation(Interpolation),
 }
+*/
 
 impl Model for AppData {
     fn event(&mut self, _: &mut EventContext, event: &mut Event) {
@@ -96,7 +99,7 @@ impl Model for AppData {
         });
 
         // App event
-        event.map(|app_event, _| match app_event {
+        /* event.map(|app_event, _| match app_event {
             AppEvent::DcToggle => {
                 self.dc = !self.dc;
             }
@@ -104,7 +107,7 @@ impl Model for AppData {
             AppEvent::Interpolation(interpolation) => {
                 self.interpolation = *interpolation;
             }
-        })
+        }) */
     }
 }
 
@@ -112,6 +115,7 @@ pub(crate) fn default_state() -> Arc<ViziaState> {
     ViziaState::new(|| SIZE)
 }
 
+/*
 fn interpolation_checkbox(cx: &mut Context, text: &str, interpolation: Interpolation) {
     Label::new(cx, text)
         .font_size(12.0)
@@ -125,6 +129,7 @@ fn interpolation_checkbox(cx: &mut Context, text: &str, interpolation: Interpola
         .right(Pixels(7.0))
         .size(Pixels(18.0));
 }
+*/
 
 pub(crate) fn create(
     params: Arc<FunctorParams>,
@@ -134,18 +139,19 @@ pub(crate) fn create(
         assets::register_noto_sans_light(cx);
         assets::register_noto_sans_thin(cx);
 
-        AppData {
-            params: params.clone(),
-            mode: Mode::Beat,
-            index: 0,
-            beat_presets: test_presets(12),
-            vol_presets: test_presets(12),
-            dc: true,
-            interpolation: Interpolation::Hermite,
-        }
-        .build(cx);
+          AppData {
+                params: params.clone(),
+                mode: Mode::Beat,
+                index: 0,
+                beat_presets: test_presets(12),
+                vol_presets: test_presets(12),
+                dc: true,
+                //interpolation: Interpolation::Hermite,
+            }
+            .build(cx);
+        
 
-/*
+        /*
         HStack::new(cx, |cx| {
             // Functor icon
              icon::FunctorIcon::new(cx)
@@ -153,7 +159,7 @@ pub(crate) fn create(
             .top(Pixels(12.5))
             .bottom(Pixels(12.5))
             .left(Pixels(15.0))
-            .right(Pixels(12.5)); 
+            .right(Pixels(12.5));
 
             // Functor label
              Label::new(cx, "Functor")
@@ -170,7 +176,7 @@ pub(crate) fn create(
                     );
                 }
             })
-            .cursor(CursorIcon::Hand); // Broken in baseview 
+            .cursor(CursorIcon::Hand); // Broken in baseview
         })
         .background_color(Color::rgb(200, 150, 255))
         .bottom(Pixels(20.0))
@@ -180,10 +186,10 @@ pub(crate) fn create(
             // Left area
             VStack::new(cx, |cx| {
                 // Beat label
-               /* Label::new(cx, "Beat")
-                    .font_size(20.0)
-                    .left(Pixels(3.0))
-                    .bottom(Pixels(5.0)); */
+                /* Label::new(cx, "Beat")
+                .font_size(20.0)
+                .left(Pixels(3.0))
+                .bottom(Pixels(5.0)); */
 
                 // Beat list
                 // ScrollView::new(cx, 0.0, 0.0, false, true, |cx| {
@@ -193,10 +199,10 @@ pub(crate) fn create(
                     .bottom(Pixels(10.0));
 
                 // Gate label
-               /* Label::new(cx, "Gate")
-                    .font_size(20.0)
-                    .left(Pixels(3.0))
-                    .bottom(Pixels(5.0)); */
+                /* Label::new(cx, "Gate")
+                .font_size(20.0)
+                .left(Pixels(3.0))
+                .bottom(Pixels(5.0)); */
 
                 // Gate list
                 //ScrollView::new(cx, 0.0, 0.0, false, true, |cx| {
@@ -248,7 +254,7 @@ pub(crate) fn create(
             .width(Pixels(262.0));
 
             // Curve view
-           /* curve_view::CurveView::new(
+            /* curve_view::CurveView::new(
                 cx,
                 AppData::beat_presets,
                 AppData::vol_presets,
